@@ -1,13 +1,14 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: api-config
-  namespace: death-metal
+  name: {{ .Values.configmap.name }}
+  namespace: {{ .Release.Namespace }}
 data:
   PORT: "3005"
   MONGODB_HOST: death-metal-mongo-service
   MONGODB_PORT: "27017"
   MONGODB_DATABASE: api
+  ENV_TITLE: {{ .Values.configmap.data.ENV_TITLE | quote }}
 
 
 

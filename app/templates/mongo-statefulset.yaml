@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mongodb
-  namespace: death-metal
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:

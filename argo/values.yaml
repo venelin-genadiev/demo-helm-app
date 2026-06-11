@@ -1,0 +1,41 @@
+configs:
+  cm: {}
+
+applications:
+  - name: mywebapp-dev
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/venelin-genadiev/demo-helm-app
+      path: app
+      targetRevision: main
+      helm:
+        valueFiles:
+          - values.yaml
+          - values-dev.yaml
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: dev
+    syncPolicy:
+      automated: {}
+      syncOptions:
+        - CreateNamespace=true
+
+  - name: mywebapp-prod
+    namespace: argocd
+    project: default
+    source:
+      repoURL: https://github.com/venelin-genadiev/demo-helm-app
+      path: app
+      targetRevision: main
+      helm:
+        valueFiles:
+          - values.yaml
+          - values-prod.yaml
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: prod
+    syncPolicy:
+      automated: {}
+      syncOptions:
+        - CreateNamespace=true

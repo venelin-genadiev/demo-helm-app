@@ -1,0 +1,7 @@
+configmap:
+  name: api-config1.0
+  data:
+    ENV_TITLE: "Death metal group - DEV"
+
+ingress:
+  host: dev.example.com

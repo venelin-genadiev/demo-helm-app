@@ -2,18 +2,18 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: api-migrations
-  namespace: death-metal
+  namespace: {{ .Release.Namespace }}
 spec:
   ttlSecondsAfterFinished: 100
   template:
     spec:
       containers:
       - name: api-migrations
-        image: death-metal-api:local
+        image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
         command: ["npm", "run", "migration:run:prod"]
         envFrom:
         - configMapRef:
-            name: api-config
+            name: {{ .Values.configmap.name }}
         - secretRef:
             name: api-secret
       restartPolicy: Never

@@ -57,6 +57,14 @@ helm upgrade --install argocd argo/argo-cd \
   --create-namespace
 ```
 
+Create the dev and prod Argo CD Applications after Argo CD is installed:
+
+```bash
+helm upgrade --install argocd-apps argo/argocd-apps \
+  -n argocd \
+  -f argo/values.yaml
+```
+
 The default Argo CD username is `admin`. Get the initial admin password with:
 
 ```bash
@@ -70,12 +78,14 @@ kubectl get secret argocd-initial-admin-secret \
 Install the Death Metal app chart after the shared add-ons are running:
 
 ```bash
-helm upgrade --install death-metal ./helm/app
+helm upgrade --install death-metal ./helm/app \
+  -n death-metal \
+  --create-namespace
 ```
 
-The app chart currently packages the existing manifests from `app/cluster` as-is, without values overrides. It includes the `death-metal` namespace manifest, so the first install creates the namespace and app resources together.
+The app chart currently packages the existing manifests from `app/cluster` as-is, without values overrides. It includes a namespace manifest based on the Helm release namespace, so the first install creates the namespace and app resources together.
 
-If the `death-metal` namespace already exists and was not created by this Helm release, delete it first or remove the namespace manifest from the chart. Helm cannot adopt an existing namespace unless it already has Helm ownership labels and annotations.
+If the release namespace already exists and was not created by this Helm release, delete it first or remove the namespace manifest from the chart. Helm cannot adopt an existing namespace unless it already has Helm ownership labels and annotations.
 
 ## Verify
 
@@ -83,7 +93,10 @@ If the `death-metal` namespace already exists and was not created by this Helm r
 kubectl get pods -n ingress-nginx
 kubectl get pods -n kube-system
 kubectl get pods -n argocd
+kubectl get applications -n argocd
 kubectl top nodes
 kubectl get all -n death-metal
+kubectl get all -n dev
+kubectl get all -n prod
 kubectl get ingress -n death-metal
 ```

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: death-metal-web
-  namespace: death-metal
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: death-metal-web
-        image: death-metal-web:local
+        image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
         resources:
           requests:
             memory: "128Mi"

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: death-metal-api
-  namespace: death-metal
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: 2
   selector:
@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: death-metal-api
-        image: death-metal-api:local
+        image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
         livenessProbe: ## should continer be restarted
           httpGet:
             path: /liveness
@@ -39,7 +39,7 @@ spec:
           failureThreshold: 3
         envFrom:
         - configMapRef:
-            name: api-config
+            name: {{ .Values.configmap.name }}
         - secretRef:
             name: api-secret
         resources:
