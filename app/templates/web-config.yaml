@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Values.webconfigmap.name }}
-  namespace: {{ .Release.Namespace }}
-data:
-  ENV_TITLE: "{{ .Values.webconfigmap.data.ENV_TITLE }}"

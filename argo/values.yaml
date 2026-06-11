@@ -2,7 +2,7 @@ configs:
   cm: {}
 
 applications:
-  - name: mywebapp-dev
+  death-metal-dev:
     namespace: argocd
     project: default
     source:
@@ -21,7 +21,7 @@ applications:
       syncOptions:
         - CreateNamespace=true
 
-  - name: mywebapp-prod
+  death-metal-prod:
     namespace: argocd
     project: default
     source:

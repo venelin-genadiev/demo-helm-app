@@ -73,6 +73,14 @@ kubectl get secret argocd-initial-admin-secret \
   -o jsonpath="{.data.password}" | base64 -d; echo
 ```
 
+Port-forward the Argo CD server locally, then open `https://localhost:8080`:
+
+```bash
+kubectl port-forward svc/argocd-server \
+  -n argocd \
+  8080:443
+```
+
 ## App Chart
 
 Install the Death Metal app chart after the shared add-ons are running:
