@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  namespace: death-metal
+data:
+  PORT: "3005"
+  MONGODB_HOST: death-metal-mongo-service
+  MONGODB_PORT: "27017"
+  MONGODB_DATABASE: api
+
+
+
+

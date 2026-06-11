@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: api-migrations
+  namespace: death-metal
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+      - name: api-migrations
+        image: death-metal-api:local
+        command: ["npm", "run", "migration:run:prod"]
+        envFrom:
+        - configMapRef:
+            name: api-config
+        - secretRef:
+            name: api-secret
+      restartPolicy: Never
