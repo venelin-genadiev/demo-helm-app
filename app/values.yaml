@@ -9,7 +9,7 @@ web:
     tag: 1.0.0
 
 configmap:
-  name: api-config1.0
+  name: api-config1.1
   data:
     ENV_TITLE: "-"
 
