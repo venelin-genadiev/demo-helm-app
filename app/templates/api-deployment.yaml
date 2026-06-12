@@ -15,6 +15,8 @@ spec:
       maxSurge: 1 ## not more than 3 (save resources)
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/api-config.yaml") . | sha256sum }}
       labels:
         app.kubernetes.io/name: death-metal
         app.kubernetes.io/component: backend
@@ -50,4 +52,3 @@ spec:
             memory: "128Mi"
         ports:
         - containerPort: 3005
-

@@ -1,5 +1,5 @@
 configmap:
-  name: api-config1.1
+  name: api-config
   data:
     ENV_TITLE: "Death metal group - DEV 1.0.0"
 
