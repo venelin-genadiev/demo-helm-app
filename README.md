@@ -54,7 +54,8 @@ Install Argo CD once per cluster to manage GitOps-based application deployments.
 ```bash
 helm upgrade --install argocd argo/argo-cd \
   -n argocd \
-  --create-namespace
+  --create-namespace \
+  -f argo/argocd-values.yaml
 ```
 
 Create the dev and prod Argo CD Applications after Argo CD is installed:
@@ -65,6 +66,10 @@ helm upgrade --install argocd-apps argo/argocd-apps \
   -f argo/values.yaml
 ```
 
+The `argo/argocd-values.yaml` file configures the `argo/argo-cd` chart,
+including the `argo.example.com` ingress. The `argo/values.yaml` file configures
+the `argo/argocd-apps` chart.
+
 The default Argo CD username is `admin`. Get the initial admin password with:
 
 ```bash
@@ -73,7 +78,11 @@ kubectl get secret argocd-initial-admin-secret \
   -o jsonpath="{.data.password}" | base64 -d; echo
 ```
 
-Port-forward the Argo CD server locally, then open `https://localhost:8080`:
+With ingress-nginx installed and `127.0.0.1 argo.example.com` in `/etc/hosts`,
+open Argo CD at `http://argo.example.com`.
+
+Alternatively, port-forward the Argo CD server locally, then open
+`https://localhost:8080`:
 
 ```bash
 kubectl port-forward svc/argocd-server \

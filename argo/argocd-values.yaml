@@ -1,0 +1,17 @@
+global:
+  domain: argo.example.com
+
+configs:
+  cm:
+    url: http://argo.example.com
+  params:
+    server.insecure: true
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hostname: argo.example.com
+    path: /
+    pathType: Prefix
+    tls: false
