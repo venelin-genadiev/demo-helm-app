@@ -1,11 +1,11 @@
 api:
   image:
-    repository: death-metal-api
+    repository: venelinagent3/death-metal-api
     tag: 1.0.0
 
 web:
   image:
-    repository: death-metal-web
+    repository: venelinagent3/death-metal-web
     tag: 1.0.0
 
 configmap:
