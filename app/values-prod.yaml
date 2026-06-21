@@ -4,4 +4,7 @@ configmap:
     ENV_TITLE: "Death metal group - PROD 1.0.4"
 
 ingress:
-  host: prod.example.com
+  host: prod.tenxbld.com
+  tls:
+    enabled: true
+    secretName: death-metal-web-prod-tls

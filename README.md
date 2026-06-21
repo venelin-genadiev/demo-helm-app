@@ -66,9 +66,10 @@ helm upgrade --install argocd-apps argo/argocd-apps \
   -f argo/values.yaml
 ```
 
-The `argo/argocd-values.yaml` file configures the `argo/argo-cd` chart,
-including the `argo.example.com` ingress. The `argo/values.yaml` file configures
-the `argo/argocd-apps` chart.
+The `argo/argocd-values.yaml` file configures the `argo/argo-cd` chart for
+local development (HTTP, `argo.example.com`). Cloud deployments use
+`argo/argocd-values-tls.yaml` (HTTPS via cert-manager). The `argo/values.yaml`
+file configures the `argo/argocd-apps` chart.
 
 The default Argo CD username is `admin`. Get the initial admin password with:
 
@@ -89,3 +90,31 @@ kubectl port-forward svc/argocd-server \
   -n argocd \
   8080:443
 ```
+
+## Ingress TLS (cloud vs local)
+
+The app chart supports optional TLS via cert-manager. Defaults in `app/values.yaml` keep TLS **disabled** so local clusters (minikube) work over plain HTTP:
+
+```yaml
+ingress:
+  className: nginx
+  host: ""
+  tls:
+    enabled: false
+    secretName: ""
+```
+
+Cloud deployments override TLS in environment-specific values files:
+
+- `app/values-dev.yaml` — `ingress.tls.enabled: true`, `secretName: death-metal-web-dev-tls`
+- `app/values-prod.yaml` — `ingress.tls.enabled: true`, `secretName: death-metal-web-prod-tls`
+- `argo/argocd-values-tls.yaml` — Argo CD HTTPS ingress (used by `infra/` and `infra-terraform/`)
+
+When `tls.enabled` is `true`, the Ingress template adds:
+
+- `cert-manager.io/cluster-issuer: letsencrypt-prod`
+- a `tls:` block referencing `ingress.tls.secretName`
+
+cert-manager must be installed in the cluster (see `infra/ansible/playbooks/05-dns-and-tls.yml`) and the ClusterIssuer name must match (`letsencrypt-prod`).
+
+For Argo CD HTTPS in cloud, update hostnames in `argo/argocd-values-tls.yaml` to match your domain. `infra/` and `infra-terraform/` install Argo CD with that file automatically.

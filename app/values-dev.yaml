@@ -4,4 +4,7 @@ configmap:
     ENV_TITLE: "Death metal group - DEV 1.0.4"
 
 ingress:
-  host: dev.example.com
+  host: dev.tenxbld.com
+  tls:
+    enabled: true
+    secretName: death-metal-web-dev-tls

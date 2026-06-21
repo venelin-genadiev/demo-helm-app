@@ -16,3 +16,6 @@ configmap:
 ingress:
   className: nginx
   host: ""
+  tls:
+    enabled: false
+    secretName: ""

@@ -1,0 +1,23 @@
+global:
+  domain: argo.tenxbld.com
+
+configs:
+  cm:
+    url: https://argo.tenxbld.com
+  params:
+    server.insecure: false
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hostname: argo.tenxbld.com
+    path: /
+    pathType: Prefix
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    tls: true
+    extraTls:
+      - hosts:
+          - argo.tenxbld.com
+        secretName: argocd-server-tls
