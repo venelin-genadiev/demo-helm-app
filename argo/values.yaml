@@ -1,6 +1,8 @@
 applications:
   death-metal-dev:
     namespace: argocd
+    finalizers:
+      - resources-finalizer.argocd.argoproj.io
     project: default
     source:
       repoURL: https://github.com/venelin-genadiev/demo-helm-app
@@ -22,6 +24,8 @@ applications:
 
   death-metal-prod:
     namespace: argocd
+    finalizers:
+      - resources-finalizer.argocd.argoproj.io
     project: default
     source:
       repoURL: https://github.com/venelin-genadiev/demo-helm-app

@@ -1,0 +1,5 @@
+name: letsencrypt-prod
+email: ""
+acmeServer: https://acme-v02.api.letsencrypt.org/directory
+secretName: cloudflare-api-token
+secretKey: api-token

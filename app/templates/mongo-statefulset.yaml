@@ -7,6 +7,9 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/instance: mongodb
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: {{ .Values.mongodb.persistentVolumeClaimRetentionPolicy.whenDeleted }}
+    whenScaled: {{ .Values.mongodb.persistentVolumeClaimRetentionPolicy.whenScaled }}
   serviceName: mongodb
   replicas: 1
   template:

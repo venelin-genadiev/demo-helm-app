@@ -8,6 +8,11 @@ web:
     repository: venelinagent3/death-metal-web
     tag: 1.0.4
 
+mongodb:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Delete
+    whenScaled: Delete
+
 configmap:
   name: api-config
   data:

@@ -5,7 +5,7 @@ configs:
   cm:
     url: https://argo.tenxbld.com
   params:
-    server.insecure: false
+    server.insecure: true
 
 server:
   ingress:
@@ -17,7 +17,3 @@ server:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
     tls: true
-    extraTls:
-      - hosts:
-          - argo.tenxbld.com
-        secretName: argocd-server-tls
